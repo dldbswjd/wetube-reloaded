@@ -11,9 +11,8 @@ const videoSchema = new mongoose.Schema({
   },
 });
 
-// 미들웨어는 모델이 생성되기 전에 만들어야 함.
-videoSchema.pre("save", async function () {
-  this.hashtags = this.hashtags[0]
+videoSchema.static("formatHashtags", function (hashtags) {
+  return hashtags
     .split(",")
     .map((word) => (word.startsWith("#") ? word : `#${word}`));
 });
